@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Costco Reward Program</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:        #005DAA;
+      --blue-dark:   #003E73;
+      --blue-pale:   #E8F1FA;
+      --red:         #E31837;
+      --red-dark:    #B5112A;
+      --white:       #FFFFFF;
+      --off-white:   #F7F9FB;
+      --charcoal:    #1A1A1A;
+      --mid-gray:    #5A5A5A;
+      --border:      #D9E6F0;
+      --gold:        #F3C13A;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--off-white);
+      color: var(--charcoal);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page { position: relative; }
+
+    /* ── Banner ── */
+    .top-banner {
+      background: var(--red);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .top-banner .sep {
+      display: inline-block;
+      margin: 0 12px;
+      font-size: 13px;
+      vertical-align: middle;
+      opacity: 0.8;
+    }
+
+    /* ── Logo Block ── */
+    .logo-block {
+      background: var(--blue);
+      text-align: center;
+      padding: 44px 20px 38px;
+      position: relative;
+    }
+
+    .logo-block::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 5px;
+      background: var(--red);
+    }
+
+    .logo-inner { position: relative; z-index: 1; }
+
+    /* Costco-style italic wordmark with red outline look */
+    .logo-name {
+      font-family: 'Inter', sans-serif;
+      font-style: italic;
+      font-size: clamp(34px, 8.5vw, 54px);
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: var(--red);
+      -webkit-text-stroke: 1.5px #fff;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      font-weight: 600;
+    }
+
+    .membership-badge {
+      display: inline-block;
+      margin-top: 18px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 50px;
+    }
+
+    /* ── Content ── */
+    .content-area { padding-top: 36px; }
+
+    .hero-claim-wrap {
+      text-align: center;
+      padding: 0 20px 32px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .savings-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--charcoal);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 4px;
+      margin-bottom: 18px;
+    }
+
+    .hero-claim {
+      font-size: clamp(19px, 4.5vw, 26px);
+      font-weight: 800;
+      color: var(--charcoal);
+      letter-spacing: 0.01em;
+    }
+
+    .hero-claim strong { color: var(--red); font-weight: 900; }
+
+    /* ── Section label ── */
+    .section-divider {
+      max-width: 640px;
+      margin: 0 auto 24px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-divider .line { flex: 1; height: 1px; background: var(--border); }
+
+    .section-divider .label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #9fb3c4;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* ── Steps ── */
+    .steps-section {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 20px 16px;
+    }
+
+    .step-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 9px;
+      box-shadow: 0 1px 4px rgba(0,93,170,0.06);
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .step-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 4px 16px rgba(0,93,170,0.12);
+      transform: translateY(-1px);
+    }
+
+    .step-num {
+      width: 40px; height: 40px; min-width: 40px;
+      border-radius: 6px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    /* ── CTA ── */
+    .cta-wrap {
+      max-width: 640px;
+      margin: 14px auto 0;
+      padding: 0 20px;
+    }
+
+    .cta-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 18px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+      background: var(--red);
+      box-shadow: 0 4px 16px rgba(227,24,55,0.32);
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: var(--red-dark);
+      box-shadow: 0 6px 22px rgba(227,24,55,0.4);
+    }
+
+    .cta-btn:active { transform: scale(0.99); }
+
+    .cta-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--mid-gray);
+      padding: 10px 20px 0;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* ── Membership tiers strip ── */
+    .tiers-strip {
+      max-width: 640px;
+      margin: 32px auto 0;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .tier-tile {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 14px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .tier-tile:hover { border-color: var(--blue); }
+
+    .tier-tile .tier-name {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    .tier-tile .tier-val {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--charcoal);
+      line-height: 1.3;
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+      max-width: 640px;
+      margin: 44px auto 0;
+      padding: 0 20px 52px;
+    }
+
+    .faq-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--charcoal);
+      margin-bottom: 18px;
+      letter-spacing: 0.01em;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 17px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--charcoal);
+      cursor: pointer;
+      text-align: left;
+      gap: 14px;
+      transition: color 0.2s;
+    }
+
+    .faq-q:hover { color: var(--blue); }
+
+    .faq-q .arrow {
+      width: 17px; height: 17px; min-width: 17px;
+      color: var(--red);
+      transition: transform 0.25s;
+    }
+
+    .faq-q[aria-expanded="true"] .arrow { transform: rotate(180deg); }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-a-inner {
+      padding: 0 20px 16px;
+      font-size: 13.5px;
+      color: var(--mid-gray);
+      line-height: 1.75;
+      font-weight: 400;
+    }
+
+    /* ── Rating ── */
+    .rating-bar {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 20px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .rating-label { font-size: 12px; font-weight: 700; color: var(--charcoal); letter-spacing: 0.06em; text-transform: uppercase; }
+    .stars { display: flex; gap: 3px; }
+    .star {
+      width: 22px; height: 22px;
+      background: #00B67A;
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .star svg { width: 13px; height: 13px; fill: #fff; }
+    .rating-score { font-size: 12px; color: var(--mid-gray); }
+
+    @media (max-width: 480px) {
+      .logo-name { font-size: 32px; }
+      .step-card { padding: 15px 16px; gap: 14px; }
+      .step-label { font-size: 14px; }
+      .cta-btn { font-size: 14px; padding: 16px; }
+      .tiers-strip { gap: 6px; }
+      .tier-tile { padding: 13px 10px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="top-banner">
+    <span class="sep">★</span>
+    3,500+ People Already Claimed
+    <span class="sep">★</span>
+  </div>
+
+  <div class="logo-block">
+    <div class="logo-inner">
+      <div class="logo-name">Costco</div>
+      <div class="logo-sub">Wholesale Reward Program</div>
+      <div class="membership-badge">Member Exclusive Offer</div>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <div class="hero-claim-wrap">
+      <div class="savings-badge">Warehouse Member Deal</div>
+      <div class="hero-claim">Claim your <strong>$500</strong> Costco voucher</div>
+    </div>
+
+    <div style="max-width:640px;margin:0 auto;padding:0 20px;">
+      <div class="tiers-strip" style="margin-bottom:28px;">
+        <div class="tier-tile">
+          <div class="tier-name">Gold Star</div>
+          <div class="tier-val">Eligible</div>
+        </div>
+        <div class="tier-tile">
+          <div class="tier-name">Executive</div>
+          <div class="tier-val">Eligible</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label">How It Works</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="steps-section">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-label">Click "Claim Now"</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-label">Enter your email and basic info</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-label">Complete 4–5 sponsored deals</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-label">Enjoy your $500 voucher!</div>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <a class="cta-btn" href="https://costco.com" target="_blank" rel="noopener">Claim Now</a>
+    </div>
+    <p class="cta-note">Completion of sponsored deals is required to claim your voucher.</p>
+
+    <div class="faq-section">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          How long do the deals take?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Most deals can be completed in 5–15 minutes each. Some may require signing up for a free trial or completing a short survey.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What are deals?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Deals are offers from our sponsors — things like signing up for a newsletter, trying a free service, or filling out a short survey. They're quick and easy to complete.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          How many deals do I have to do?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">You'll need to complete between 4 and 5 sponsored deals to qualify. The exact number will be shown after you register.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          When will I receive my voucher?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Your $500 Costco voucher will be delivered to your email within 7–10 business days after your deals are verified.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rating-bar">
+      <span class="rating-label">Excellent</span>
+      <div class="stars" aria-label="4.9 out of 5 stars">
+        <div class="star"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+        <div class="star"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+        <div class="star"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+        <div class="star"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+        <div class="star"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+      </div>
+      <span class="rating-score">4.9 / 5</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function toggleFaq(btn) {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    document.querySelectorAll('.faq-q').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+      b.nextElementSibling.style.maxHeight = '0';
+    });
+    if (!expanded) {
+      btn.setAttribute('aria-expanded', 'true');
+      const panel = btn.nextElementSibling;
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+  }
+</script>
+</body>
+</html>
